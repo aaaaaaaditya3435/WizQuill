@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #0f1117;
+  --surface:  #1a1d27;
+  --surface2: #22263a;
+  --border:   #2e3250;
+  --accent:   #7c6af7;
+  --accent2:  #a78bfa;
+  --danger:   #f87171;
+  --success:  #34d399;
+  --text:     #e8eaf6;
+  --muted:    #7b82a8;
+  --canvas-bg:#13151f;
+  --dot-color:rgba(124,106,247,0.12);
+  --radius:   10px;
+}
+
+[data-theme="light"] {
+  --bg:       #f4f4f8;
+  --surface:  #ffffff;
+  --surface2: #ededf5;
+  --border:   #d4d4e8;
+  --accent:   #6c5ce7;
+  --accent2:  #8b7cf8;
+  --danger:   #e55353;
+  --success:  #00b894;
+  --text:     #1e1e2e;
+  --muted:    #888aaa;
+  --canvas-bg:#f9f9ff;
+  --dot-color:rgba(108,92,231,0.1);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  height: 100vh;
+  overflow: hidden;
+  transition: background 0.25s, color 0.25s;
+}
+
+/* Feed page needs scroll */
+.page-scroll { overflow-y: auto; height: 100vh; }
+
+/* Dropdown base */
+.wq-dropdown { position: relative; display: inline-block; }
+.wq-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 999;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 6px;
+  min-width: 160px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+  flex-direction: column;
+  gap: 2px;
+}
+.wq-dropdown.open .wq-dropdown-menu { display: flex; }
+.wq-dropdown-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px; border-radius: 7px; cursor: pointer;
+  font-size: 13px; color: var(--text); border: none;
+  background: transparent; width: 100%; text-align: left;
+  transition: background 0.12s;
+}
+.wq-dropdown-item:hover { background: var(--surface2); }
+.wq-dropdown-item.active {
+  background: rgba(124,106,247,0.18);
+  color: var(--accent2);
+}
+.wq-dropdown-label {
+  font-size: 10px; font-weight: 700; color: var(--muted);
+  letter-spacing: 1px; padding: 4px 10px 2px;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }

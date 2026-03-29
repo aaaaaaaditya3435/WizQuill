@@ -6,7 +6,15 @@ const useRoomStore = create((set) => ({
   users: [],
   messages: [],
   strokes: [],
-  tool: { color: '#000000', size: 4, eraser: false },
+  theme: 'dark',
+  tool: {
+    color: '#a78bfa',
+    size: 4,
+    opacity: 1,
+    mode: 'pen',
+    brush: 'round',   // round | square | calligraphy | spray | dashed
+    fill: false,
+  },
 
   setRoom: (code) => set({ roomCode: code }),
   setUsername: (username) => set({ username }),
@@ -16,6 +24,7 @@ const useRoomStore = create((set) => ({
   setStrokes: (strokes) => set({ strokes }),
   clearStrokes: () => set({ strokes: [] }),
   setTool: (patch) => set((s) => ({ tool: { ...s.tool, ...patch } })),
+  toggleTheme: () => set((s) => ({ theme: s.theme === 'dark' ? 'light' : 'dark' })),
 }))
 
 export default useRoomStore

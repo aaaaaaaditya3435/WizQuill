@@ -6,16 +6,18 @@ const mongoose = require('mongoose')
 
 const app = express()
 app.use(cors({ origin: 'http://localhost:5173' }))
-app.use(express.json())
+app.use(express.json({ limit: '10mb' }))
 
+app.use('/api/auth',  require('./routes/auth'))
 app.use('/api/rooms', require('./routes/rooms'))
+app.use('/api/posts', require('./routes/posts'))
 
 const server = http.createServer(app)
 const io = new Server(server, { cors: { origin: 'http://localhost:5173' } })
 
 require('./socket')(io)
 
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/makeitio'
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/wizquill'
 
 mongoose.connect(MONGO_URI).then(() => {
   console.log('MongoDB connected')
