@@ -51,8 +51,17 @@ function Dropdown({ label, icon, children }) {
 }
 
 export default function Toolbar({ onClear }) {
-  const { tool, setTool, theme, toggleTheme } = useRoomStore()
+  const { tool, setTool, theme, toggleTheme, undo, redo, historyIndex, history } = useRoomStore()
   const [paletteTab, setPaletteTab] = useState('Vibrant')
+
+  useEffect(() => {
+    const handler = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'z') { e.preventDefault(); undo() }
+      if ((e.ctrlKey || e.metaKey) && (e.key === 'y' || (e.shiftKey && e.key === 'z'))) { e.preventDefault(); redo() }
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [undo, redo])
 
   const currentShape = SHAPES.find(s => s.mode === tool.mode) || SHAPES[0]
   const currentBrush = BRUSHES.find(b => b.brush === tool.brush) || BRUSHES[0]
@@ -162,6 +171,12 @@ export default function Toolbar({ onClear }) {
 
       {/* Spacer */}
       <div style={{ flex: 1 }} />
+
+      {/* Undo / Redo */}
+      <button style={s.iconBtn} onClick={undo} disabled={historyIndex <= 0} title="Undo (Ctrl+Z)">↩</button>
+      <button style={s.iconBtn} onClick={redo} disabled={historyIndex >= history.length - 1} title="Redo (Ctrl+Y)">↪</button>
+
+      <div style={s.sep} />
 
       {/* Theme toggle */}
       <button style={s.iconBtn} onClick={toggleTheme} title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}>

@@ -7,6 +7,7 @@ export default function useCanvas(emitDraw) {
   const drawing = useRef(false)
   const startPos = useRef(null)
   const toolRef = useRef(useRoomStore.getState().tool)
+  const strokeBatch = useRef([]) // accumulate freehand segments before committing to history
 
   useEffect(() => useRoomStore.subscribe(s => { toolRef.current = s.tool }), [])
 
@@ -34,6 +35,7 @@ export default function useCanvas(emitDraw) {
 
   const onStart = (e) => {
     drawing.current = true
+    strokeBatch.current = []
     const canvas = canvasRef.current
     const pos = getPos(e, canvas)
     startPos.current = pos
@@ -62,7 +64,9 @@ export default function useCanvas(emitDraw) {
         color: tool.color, size: tool.size, opacity: tool.opacity,
       }
       canvas._last = pos
-      useRoomStore.getState().addStroke(stroke)
+      // accumulate without pushing to history yet
+      strokeBatch.current.push(stroke)
+      useRoomStore.getState().setStrokes([...useRoomStore.getState().strokes, stroke])
       emitDraw(stroke)
     } else if (isShape(tool.mode) && preview && startPos.current) {
       const ctx = preview.getContext('2d')
@@ -83,7 +87,15 @@ export default function useCanvas(emitDraw) {
     const preview = previewRef.current
     const tool = toolRef.current
 
-    if (isShape(tool.mode)) {
+    if (isFreehand(tool.mode) && strokeBatch.current.length > 0) {
+      // commit the whole freehand gesture as one history entry
+      const store = useRoomStore.getState()
+      const base = store.strokes.slice(0, store.strokes.length - strokeBatch.current.length)
+      const newStrokes = [...base, ...strokeBatch.current]
+      const newHistory = [...store.history.slice(0, store.historyIndex + 1), newStrokes]
+      useRoomStore.setState({ strokes: newStrokes, history: newHistory, historyIndex: newHistory.length - 1 })
+      strokeBatch.current = []
+    } else if (isShape(tool.mode)) {
       const pos = getPos(e, canvas)
       const stroke = {
         mode: tool.mode,
