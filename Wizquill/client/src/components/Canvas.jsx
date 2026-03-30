@@ -6,6 +6,7 @@ export default function Canvas({ emitDraw }) {
   const { canvasRef, previewRef, onStart, onMove, onEnd } = useCanvas(emitDraw)
   const bgRef = useRef(null)
   const theme = useRoomStore((s) => s.theme)
+  const toolMode = useRoomStore((s) => s.tool.mode)
 
   const syncSize = (currentTheme) => {
     const wrapper = canvasRef.current?.parentElement
@@ -32,7 +33,7 @@ export default function Canvas({ emitDraw }) {
   }, [theme])
 
   return (
-    <div style={s.wrapper}>
+    <div style={{ ...s.wrapper, cursor: toolMode === 'select' ? 'default' : 'crosshair' }}>
       <canvas ref={bgRef} style={s.layer} />
       <canvas ref={canvasRef} style={s.layer}
         onMouseDown={onStart} onMouseMove={onMove} onMouseUp={onEnd} onMouseLeave={onEnd}

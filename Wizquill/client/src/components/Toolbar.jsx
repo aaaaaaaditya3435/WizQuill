@@ -10,6 +10,7 @@ const BRUSHES = [
 ]
 
 const SHAPES = [
+  { mode: 'select', icon: '⬚',  label: 'Select' },
   { mode: 'pen',    icon: '✏️', label: 'Freehand' },
   { mode: 'eraser', icon: '◻',  label: 'Eraser' },
   { mode: 'line',   icon: '╱',  label: 'Line' },
