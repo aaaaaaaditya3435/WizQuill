@@ -11,6 +11,7 @@ app.use(express.json({ limit: '10mb' }))
 app.use('/api/auth',  require('./routes/auth'))
 app.use('/api/rooms', require('./routes/rooms'))
 app.use('/api/posts', require('./routes/posts'))
+app.use('/api/users', require('./routes/users'))
 
 const server = http.createServer(app)
 const io = new Server(server, { cors: { origin: 'http://localhost:5173' } })
