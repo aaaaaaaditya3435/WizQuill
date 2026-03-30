@@ -36,3 +36,4 @@ Open http://localhost:5173
 - Live user presence list
 - Eraser, color picker, brush size
 - Rooms auto-expire after 24h (MongoDB TTL index)
+- Share your craft with others using it's blogging features
