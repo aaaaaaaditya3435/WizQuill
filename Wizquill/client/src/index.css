@@ -83,3 +83,7 @@ body {
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+/* Profile grid card hover */
+.profile-grid-card:hover img { transform: scale(1.04); }
+.profile-grid-card:hover .grid-overlay { opacity: 1 !important; }

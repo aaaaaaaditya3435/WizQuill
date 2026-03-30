@@ -10,7 +10,6 @@ export default function Feed() {
   const { token, username, logout } = useAuthStore()
   const { theme, toggleTheme } = useRoomStore()
   const navigate = useNavigate()
-
   const authHeaders = { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }
 
   useEffect(() => {
@@ -66,7 +65,7 @@ export default function Feed() {
             🎨 Go to Canvas
           </button>
           <button style={s.iconBtn} onClick={toggleTheme}>{theme === 'dark' ? '☀️' : '🌙'}</button>
-          <span style={s.userChip}>@{username}</span>
+          <button style={s.userChip} onClick={() => navigate('/profile')}>@{username}</button>
           <button style={s.logoutBtn} onClick={() => { logout(); navigate('/') }}>Sign out</button>
         </div>
       </div>
@@ -87,7 +86,11 @@ export default function Feed() {
                 {post.author[0].toUpperCase()}
               </span>
               <div>
-                <div style={s.authorName}>{post.author}</div>
+                <div style={s.authorName}
+                  onClick={() => navigate(`/profile/${post.author}`)}
+                  title={`View ${post.author}'s profile`}>
+                  {post.author}
+                </div>
                 <div style={s.postDate}>{new Date(post.createdAt).toLocaleDateString()}</div>
               </div>
               {post.author === username && (
@@ -158,14 +161,14 @@ const s = {
   navRight: { display: 'flex', alignItems: 'center', gap: 10 },
   canvasBtn: { padding: '8px 16px', borderRadius: 8, border: 'none', background: 'linear-gradient(135deg,#7c6af7,#a78bfa)', color: '#fff', fontWeight: 700, fontSize: 13, cursor: 'pointer' },
   iconBtn: { width: 34, height: 34, borderRadius: 8, border: '1px solid var(--border)', background: 'var(--surface2)', cursor: 'pointer', fontSize: 16 },
-  userChip: { fontSize: 13, color: 'var(--muted)', fontWeight: 600 },
+  userChip: { fontSize: 13, color: 'var(--muted)', fontWeight: 600, padding: '6px 10px', borderRadius: 8, border: '1px solid var(--border)', background: 'var(--surface2)', cursor: 'pointer' },
   logoutBtn: { padding: '6px 12px', borderRadius: 8, border: '1px solid var(--border)', background: 'transparent', color: 'var(--muted)', cursor: 'pointer', fontSize: 12 },
   feed: { maxWidth: 640, margin: '32px auto', padding: '0 16px', display: 'flex', flexDirection: 'column', gap: 24 },
   empty: { textAlign: 'center', padding: '80px 0' },
   card: { background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, overflow: 'hidden' },
   cardHeader: { display: 'flex', alignItems: 'center', gap: 12, padding: '14px 16px' },
   avatar: { width: 36, height: 36, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: 15, flexShrink: 0 },
-  authorName: { fontWeight: 600, fontSize: 14, color: 'var(--text)' },
+  authorName: { fontWeight: 600, fontSize: 14, color: 'var(--text)', cursor: 'pointer' },
   postDate: { fontSize: 11, color: 'var(--muted)', marginTop: 1 },
   deleteBtn: { marginLeft: 'auto', background: 'transparent', border: 'none', color: 'var(--muted)', cursor: 'pointer', fontSize: 14, padding: '4px 8px' },
   postTitle: { padding: '0 16px 10px', fontWeight: 600, fontSize: 15, color: 'var(--text)' },

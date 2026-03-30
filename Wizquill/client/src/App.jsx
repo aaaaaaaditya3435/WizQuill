@@ -4,6 +4,7 @@ import Login from './pages/Login'
 import Feed from './pages/Feed'
 import CanvasEntry from './pages/CanvasEntry'
 import Room from './pages/Room'
+import Profile from './pages/Profile'
 import useRoomStore from './store/roomStore'
 import useAuthStore from './store/authStore'
 
@@ -26,6 +27,8 @@ export default function App() {
         <Route path="/feed" element={<Protected><Feed /></Protected>} />
         <Route path="/canvas" element={<Protected><CanvasEntry /></Protected>} />
         <Route path="/room/:code" element={<Protected><Room /></Protected>} />
+        <Route path="/profile" element={<Protected><Profile /></Protected>} />
+        <Route path="/profile/:username" element={<Protected><Profile /></Protected>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
