@@ -1,6 +1,6 @@
-# MakeIT.io
+# WizQuill
 
-Real-time collaborative whiteboard + chat.
+Real-time collaborative whiteboard + chat and blogging.
 
 ## Stack
 - **Frontend**: React + Vite, React Router, Zustand, HTML5 Canvas
