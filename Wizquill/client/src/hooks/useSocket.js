@@ -29,7 +29,5 @@ export default function useSocket(roomCode, username) {
   const emitDraw = (stroke) => socketRef.current?.emit('draw', stroke)
   const emitClear = () => socketRef.current?.emit('clear')
   const emitChat = (text) => socketRef.current?.emit('chat', text)
-  const emitCursor = (pos) => socketRef.current?.emit('cursor', pos)
-
-  return { emitDraw, emitClear, emitChat, emitCursor }
+  return { emitDraw, emitClear, emitChat }
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useRoomStore from '../store/roomStore'
 import useAuthStore from '../store/authStore'
@@ -56,13 +56,13 @@ export default function CanvasEntry() {
 
         <div style={s.divider}><span style={s.dividerLine} /><span style={s.dividerText}>or join existing</span><span style={s.dividerLine} /></div>
 
-        <input style={s.input}
+        <input
+          style={{ ...s.input, letterSpacing: 4, textTransform: 'uppercase' }}
           placeholder="Enter room code"
           value={joinCode}
           onChange={e => setJoinCode(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && joinRoom()}
           maxLength={6}
-          style={{ ...s.input, letterSpacing: 4, textTransform: 'uppercase' }}
         />
         <button style={s.btnSecondary} onClick={joinRoom} disabled={loading === 'join'}>
           {loading === 'join' ? '...' : '→ Join Room'}

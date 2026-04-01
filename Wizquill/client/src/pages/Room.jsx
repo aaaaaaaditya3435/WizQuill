@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import useSocket from '../hooks/useSocket'
 import Canvas from '../components/Canvas'
